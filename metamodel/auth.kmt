@@ -1,0 +1,53 @@
+@uri "http://auth/1.0"
+package auth;
+
+require "kermeta"
+require "http://www.eclipse.org/emf/2002/Ecore"
+require "platform:/resource/kbtu.project.or/model/Ecore.ecore"
+abstract class User
+{
+	attribute id : ecore::EInt
+
+	attribute login : ecore::EString
+
+	attribute password : ecore::EString
+
+}
+class Student inherits User
+{
+	attribute student_id : ecore::EString
+
+}
+class Admin inherits User
+{
+	operation createUser(login : ecore::EString, password : ecore::EString) : Void is
+		abstract
+
+	operation editUser(id : ecore::EInt) : Void is
+		abstract
+
+	operation deleteUser(id : ecore::EInt) : Void is
+		abstract
+
+}
+class Teacher inherits User
+{
+	attribute teacher_id : ecore::EString
+
+}
+class Lecturer inherits Teacher
+{
+}
+class Tutor inherits Teacher
+{
+}
+class Professor inherits Teacher
+{
+}
+class AuthBackend
+{
+	operation authenticate(student_id : ecore::EString, password : ecore::EString) : EBoolean is
+		abstract
+
+}
+alias EBoolean : kermeta::standard::Boolean;
